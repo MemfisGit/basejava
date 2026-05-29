@@ -1,32 +1,36 @@
+package javaops.webapp.storage;
+
+import javaops.webapp.model.Resume;
+
 /**
- * Array based storage for Resumes
+ * Array based storage for Resumes.
  */
 public class ArrayStorage {
-    final int capacity = 10000;
-    Resume[] storage = new Resume[capacity];
-    int size = 0;
+    private final int capacity = 10000;
+    private Resume[] storage = new Resume[capacity];
+    private int size = 0;
 
-    void clear() {
+    public void clear() {
         for (int i = 0; i < size; i++) {
             storage[i] = null;
         }
         size = 0;
     }
 
-    void save(Resume r) {
-        Resume old = get(r.uuid);
+    public void save(Resume r) {
+        Resume old = get(r.getUuid());
         if (old == null) {
             if (size < capacity) {
                 storage[size] = r;
+                size++;
             }
-            size++;
         }
     }
 
-    Resume get(String uuid) {
+    public Resume get(String uuid) {
         for (int i = 0; i < size; i++) {
             Resume r = storage[i];
-            if (r.uuid.equals(uuid)) {
+            if (r.getUuid().equals(uuid)) {
                 return r;
             }
         }
@@ -34,10 +38,10 @@ public class ArrayStorage {
         return null;
     }
 
-    void delete(String uuid) {
+    public void delete(String uuid) {
         for (int i = 0; i < size; i++) {
             Resume r = storage[i];
-            if (r.uuid.equals(uuid)) {
+            if (r.getUuid().equals(uuid)) {
                 storage[i] = storage[size - 1];
                 storage[size - 1] = null;
                 size--;
@@ -49,7 +53,7 @@ public class ArrayStorage {
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    Resume[] getAll() {
+    public Resume[] getAll() {
         Resume[] resumes = new Resume[size];
         for (int i = 0; i < size; ++i) {
             resumes[i] = storage[i];
@@ -58,7 +62,7 @@ public class ArrayStorage {
         return resumes;
     }
 
-    int size() {
+    public int size() {
         return size;
     }
 
