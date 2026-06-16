@@ -55,11 +55,33 @@ public class ArrayStorage {
      */
     public Resume[] getAll() {
         Resume[] resumes = new Resume[size];
-        for (int i = 0; i < size; ++i) {
+        for (int i = 0; i < size; i++) {
             resumes[i] = storage[i];
         }
 
         return resumes;
+    }
+
+    public void update(Resume r) {
+        int index = getIndexById(r.getUuid());
+        if (index > -1) {
+            storage[index] = r;
+        } else {
+            System.out.println("Резюме " + r.getUuid() + " " +  " не найдено");
+        }
+    }
+
+
+    private int getIndexById(String searchId) {
+        int result = -1;
+        for(int i = 0; i < size; i++) {
+            String targetId = storage[i].getUuid();
+            if (searchId.equals(targetId)) {
+                result = i;
+            }
+        }
+
+        return result;
     }
 
     public int size() {
