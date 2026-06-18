@@ -18,41 +18,42 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
-        Resume old = get(r.getUuid());
-        if (old == null) {
-            if (size < capacity) {
+        int index = getIndexById(r.getUuid());
+        if (index >= 0) {
+            System.out.println("Резюме " + r.getUuid() + " уже добавлено в массив");
+        } else {
+            if (size <= capacity - 1) {
                 storage[size] = r;
                 size++;
+            } else {
+                System.out.println("Массив ArayStorage переполнен");
             }
         }
     }
 
     public Resume get(String uuid) {
-        for (int i = 0; i < size; i++) {
-            Resume r = storage[i];
-            if (r.getUuid().equals(uuid)) {
-                return r;
-            }
+        int index = getIndexById(uuid);
+        if (index < 0) {
+            System.out.println("Резюме " + uuid + " не найдено");
+            return null;
+        } else {
+            Resume r = storage[index];
+            return r;
         }
-
-        return null;
     }
 
     public void delete(String uuid) {
-        for (int i = 0; i < size; i++) {
-            Resume r = storage[i];
-            if (r.getUuid().equals(uuid)) {
-                storage[i] = storage[size - 1];
-                storage[size - 1] = null;
-                size--;
-                return;
-            }
+        int index = getIndexById(uuid);
+        if (index < 0) {
+            System.out.println("Резюме " + uuid + " не найдено");
+        } else {
+            storage[index] = storage[size - 1];
+            storage[size - 1] = null;
+            size--;
         }
+        return;
     }
 
-    /**
-     * @return array, contains only Resumes in storage (without null)
-     */
     public Resume[] getAll() {
         Resume[] resumes = new Resume[size];
         for (int i = 0; i < size; i++) {
@@ -64,28 +65,26 @@ public class ArrayStorage {
 
     public void update(Resume r) {
         int index = getIndexById(r.getUuid());
-        if (index > -1) {
-            storage[index] = r;
+        if (index < 0) {
+            System.out.println("Резюме " + r.getUuid() + " не найдено");
         } else {
-            System.out.println("Резюме " + r.getUuid() + " " +  " не найдено");
+            storage[index] = r;
         }
     }
 
-
     private int getIndexById(String searchId) {
         int result = -1;
-        for(int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) {
             String targetId = storage[i].getUuid();
             if (searchId.equals(targetId)) {
                 result = i;
+                break;
             }
         }
-
         return result;
     }
 
     public int size() {
         return size;
     }
-
 }
