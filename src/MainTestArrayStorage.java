@@ -1,6 +1,5 @@
-package javaops.webapp.storage;
-
 import javaops.webapp.model.Resume;
+import javaops.webapp.storage.ArrayStorage;
 
 /**
  * Test for your javaops.webapp.storage.ArrayStorage implementation.
