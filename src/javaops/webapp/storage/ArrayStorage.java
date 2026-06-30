@@ -7,7 +7,6 @@ import javaops.webapp.model.Resume;
  * Array based storage for Resumes.
  */
 public class ArrayStorage {
-
     private static final int capacity = 10000;
     private Resume[] storage = new Resume[capacity];
     private int size = 0;
@@ -65,7 +64,7 @@ public class ArrayStorage {
     }
 
     private int findResumeIndex(String searchUuid) {
-       for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) {
             String targetUuid = storage[i].getUuid();
             if (searchUuid.equals(targetUuid)) {
                 return i;
